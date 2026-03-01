@@ -1,0 +1,26 @@
+title: "天之道"
+author: "tianzhanda"
+description: "科技博客"
+
+remote_theme: "mmistakes/minimal-mistakes"
+
+markdown: kramdown
+paginate: 5
+
+kramdown:
+  input: GFM
+
+plugins:
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-gist
+
+include:
+  - _pages
+
+defaults:
+  - scope:
+      path: "_posts"
+    values:
+      layout: single
+      author_profile: true
