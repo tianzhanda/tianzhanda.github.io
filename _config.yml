@@ -1,6 +1,7 @@
 title: "Tian"
 author: "tianzhanda"
 description: "科技博客"
+url: "https://tianzhanda.github.io"
 
 minimal_mistakes_skin: "dark"
 
@@ -9,10 +10,26 @@ remote_theme: "mmistakes/minimal-mistakes@4.27.0"
 markdown: kramdown
 paginate: 5
 
+enable_copy_code_button: true
+
+breadcrumbs: true
+
 plugins:
   - jekyll-paginate
   - jekyll-sitemap
   - jekyll-include-cache
+  - jekyll-archives
+
+jekyll_archives:
+  enabled:
+    - categories
+    - tags
+  layouts:
+    category: archive-taxonomy
+    tag: archive-taxonomy
+  permalinks:
+    category: /categories/:name/
+    tag: /tags/:name/
 
 defaults:
   - scope:
@@ -20,3 +37,8 @@ defaults:
     values:
       layout: single
       author_profile: true
+      toc: true
+      read_time: true
+      comments: true
+      share: true
+      related: true
