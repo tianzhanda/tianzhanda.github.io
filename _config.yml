@@ -13,14 +13,3 @@ kramdown:
 plugins:
   - jekyll-paginate
   - jekyll-sitemap
-  - jekyll-gist
-
-include:
-  - _pages
-
-defaults:
-  - scope:
-      path: "_posts"
-    values:
-      layout: single
-      author_profile: true
