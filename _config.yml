@@ -2,6 +2,8 @@ title: "天之道"
 author: "tianzhanda"
 description: "科技博客"
 
+minimal_mistakes_skin: "dark"
+
 remote_theme: "mmistakes/minimal-mistakes@4.27.0"
 
 markdown: kramdown
