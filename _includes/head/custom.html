@@ -1,30 +1,35 @@
 <!-- Custom CSS -->
 <style>
 /* Hide Copy text on code button, show only icon */
-button.code-copy-button .ClipboardButton__Message {
+.code-copy-button .ClipboardButton__message {
   display: none !important;
 }
-button.code-copy-button {
+.code-copy-button {
   min-width: auto !important;
-  padding: 4px 6px !important;
-}
-button.code-copy-button svg {
-  width: 16px !important;
-  height: 16px !important;
+  padding: 2px 6px !important;
 }
 
 /* Move breadcrumbs to right side */
-.page__content .breadcrumbs {
+.breadcrumbs {
   display: flex !important;
   justify-content: flex-end !important;
   flex-wrap: wrap;
 }
-.page__content .breadcrumbs .breadcrumb-link {
-  margin-left: 8px;
+.breadcrumbs li {
+  margin-left: 8px !important;
 }
 </style>
 
-<!-- Page views counter - Badge style -->
-<a href="https://hitscounter.dev" target="_blank">
-  <img src="https://hitscounter.dev/api/hit?url=https%3A%2F%2Ftianzhanda.github.io&label=Visitors&icon=eye-fill&color=%231d9bf0&label=Views" alt="hits counter" />
-</a>
+<!-- Page views counter - placed at bottom of page -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  var counter = document.createElement('div');
+  counter.style.cssText = 'text-align:center;margin-top:30px;padding:10px;';
+  counter.innerHTML = '<a href="https://hitscounter.dev" target="_blank"><img src="https://hitscounter.dev/api/hit?url=https%3A%2F%2Ftianzhanda.github.io&label=Visitors&icon=eye-fill&color=%231d9bf0" alt="hits counter" /></a>';
+  
+  var main = document.querySelector('.page__content') || document.querySelector('main');
+  if (main) {
+    main.appendChild(counter);
+  }
+});
+</script>
