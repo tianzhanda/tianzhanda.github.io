@@ -14,6 +14,14 @@ enable_copy_code_button: true
 
 breadcrumbs: true
 
+comments:
+  provider: "utterances"
+  utterances:
+    repo: "tianzhanda/tianzhanda.github.io"
+    issue_term: "pathname"
+    label: "comment"
+    theme: "github-dark"
+
 plugins:
   - jekyll-paginate
   - jekyll-sitemap
