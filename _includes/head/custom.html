@@ -1,8 +1,11 @@
 <!-- Custom CSS -->
 <style>
-/* Page width -100px */
-.page {
-  max-width: calc(1280px - 100px) !important;
+/* Page width custom */
+@media (min-width: 80em) {
+    .page {
+        width:calc(100% - 50px);
+        padding-inline-end:300px
+    }
 }
 
 /* Hide Copy text on code button, show only icon */
