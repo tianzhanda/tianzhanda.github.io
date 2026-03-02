@@ -112,7 +112,7 @@ tail -100 /tmp/openclaw/openclaw-2026-03-02.log | grep -i imessage
 
 日志显示：
 ```
-imessage: delivered reply to imessage:+8617381989217
+imessage: delivered reply to imessage:+86XXXXXXXXXXX
 ```
 
 iMessage 消息收发成功！
