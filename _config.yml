@@ -7,6 +7,9 @@ minimal_mistakes_skin: "dark"
 
 remote_theme: "mmistakes/minimal-mistakes@4.27.0"
 
+include:
+  - "_pages"
+
 markdown: kramdown
 paginate: 5
 

@@ -106,35 +106,135 @@ a:hover {
    Masthead / Navigation
    ========================================== */
 .masthead {
-  background: rgba(10, 14, 20, 0.95) !important;
-  backdrop-filter: blur(12px) !important;
-  -webkit-backdrop-filter: blur(12px) !important;
-  border-bottom: 1px solid var(--border-dim) !important;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(10, 14, 20, 0.85) !important;
+  backdrop-filter: blur(20px) saturate(200%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(200%) !important;
+  border-bottom: 1px solid rgba(0, 255, 157, 0.06) !important;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.015);
 }
 
 .masthead__inner-wrap {
-  max-width: 1200px !important;
+  max-width: 1280px !important;
+  padding: 0 24px !important;
 }
 
-.masthead__menu-item a, .greedy-nav a {
-  font-family: var(--font-mono) !important;
-  font-size: 0.85rem !important;
-  color: var(--text-secondary) !important;
-  transition: color 0.25s ease;
-  letter-spacing: 0.5px;
-}
-
-.masthead__menu-item a:hover, .greedy-nav a:hover {
-  color: var(--accent-green) !important;
-  text-shadow: none;
-}
-
+/* ── Site title ── */
 .site-title {
   font-family: var(--font-mono) !important;
   font-weight: 700 !important;
+  font-size: 1rem !important;
   color: var(--accent-green) !important;
-  font-size: 1.1rem !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 8px 16px !important;
+  margin: 6px 0 !important;
+  border: 1px solid rgba(0, 255, 157, 0.12);
+  border-radius: 6px;
+  background: rgba(0, 255, 157, 0.025);
+  transition: all 0.3s ease;
   letter-spacing: 0.5px;
+  text-decoration: none !important;
+}
+
+.site-title::before {
+  content: '~';
+  font-size: 0.9rem;
+  color: rgba(0, 255, 157, 0.35);
+  font-weight: 400;
+}
+
+.site-title:hover {
+  background: rgba(0, 255, 157, 0.05);
+  border-color: rgba(0, 255, 157, 0.25);
+  box-shadow: 0 0 20px rgba(0, 255, 157, 0.06);
+}
+
+/* ── Nav items ── */
+.greedy-nav {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+}
+
+.masthead__menu-item {
+  margin: 0 !important;
+}
+
+.masthead__menu-item a,
+.greedy-nav a {
+  font-family: var(--font-mono) !important;
+  font-size: 0.8rem !important;
+  font-weight: 500 !important;
+  color: var(--text-secondary) !important;
+  padding: 8px 18px !important;
+  border-radius: 20px !important;
+  transition: all 0.25s ease !important;
+  letter-spacing: 0.3px !important;
+  text-decoration: none !important;
+  border: 1px solid transparent !important;
+  line-height: 1 !important;
+}
+
+.masthead__menu-item a:hover,
+.greedy-nav a:hover {
+  color: var(--accent-green) !important;
+  background: rgba(0, 255, 157, 0.05) !important;
+  border-color: rgba(0, 255, 157, 0.1) !important;
+}
+
+/* ── Active page mark ── */
+.masthead__menu-item--active a {
+  color: var(--accent-green) !important;
+  background: rgba(0, 255, 157, 0.07) !important;
+  border-color: rgba(0, 255, 157, 0.15) !important;
+}
+
+/* ── Hidden menu dropdown (mobile) ── */
+.greedy-nav .hidden-links {
+  background: rgba(10, 14, 20, 0.97) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(0, 255, 157, 0.08) !important;
+  border-radius: 10px !important;
+  padding: 6px !important;
+  margin-top: 8px !important;
+}
+
+.greedy-nav .hidden-links a {
+  display: block !important;
+  border-radius: 8px !important;
+  padding: 10px 18px !important;
+  margin: 2px 0 !important;
+}
+
+/* ── Hamburger toggle button ── */
+.greedy-nav button {
+  background: rgba(0, 255, 157, 0.04) !important;
+  border: 1px solid rgba(0, 255, 157, 0.1) !important;
+  border-radius: 6px !important;
+  padding: 6px 10px !important;
+  color: var(--text-secondary) !important;
+  cursor: pointer !important;
+  transition: all 0.25s ease !important;
+}
+
+.greedy-nav button:hover {
+  background: rgba(0, 255, 157, 0.08) !important;
+  border-color: rgba(0, 255, 157, 0.2) !important;
+  color: var(--accent-green) !important;
+}
+
+.greedy-nav button svg {
+  stroke: var(--text-secondary);
+  transition: stroke 0.25s ease;
+}
+
+.greedy-nav button:hover svg {
+  stroke: var(--accent-green);
 }
 
 /* ==========================================
