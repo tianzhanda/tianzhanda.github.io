@@ -29,18 +29,6 @@ plugins:
   - jekyll-paginate
   - jekyll-sitemap
   - jekyll-include-cache
-  - jekyll-archives
-
-jekyll_archives:
-  enabled:
-    - categories
-    - tags
-  layouts:
-    category: archive-taxonomy
-    tag: archive-taxonomy
-  permalinks:
-    category: /categories/:name/
-    tag: /tags/:name/
 
 defaults:
   - scope:
