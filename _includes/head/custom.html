@@ -712,10 +712,15 @@ pre {
     font-size: 0.8rem !important;
     padding: 5px 10px !important;
     margin: 4px 0 !important;
-    max-width: 110px;
+    max-width: 100px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    display: inline-flex !important;
+  }
+
+  .site-title::before {
+    font-size: 0.75rem !important;
   }
 
   .greedy-nav {
@@ -730,6 +735,11 @@ pre {
 
   .greedy-nav button {
     padding: 4px 8px !important;
+  }
+
+  /* Hide search button on mobile */
+  .search-toggle-btn {
+    display: none !important;
   }
 }
 
