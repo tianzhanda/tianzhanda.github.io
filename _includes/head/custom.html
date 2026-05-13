@@ -712,7 +712,6 @@ pre {
     font-size: 0.8rem !important;
     padding: 5px 10px !important;
     margin: 4px 0 !important;
-    gap: 4px !important;
     max-width: 110px;
     overflow: hidden;
     white-space: nowrap;
@@ -720,26 +719,17 @@ pre {
   }
 
   .greedy-nav {
-    gap: 2px !important;
+    gap: 4px !important;
   }
 
   .masthead__menu-item a,
   .greedy-nav a {
-    font-size: 0.72rem !important;
-    padding: 6px 10px !important;
+    font-size: 0.75rem !important;
+    padding: 6px 12px !important;
   }
 
   .greedy-nav button {
-    padding: 4px 6px !important;
-  }
-
-  .search-toggle-btn {
-    padding: 4px 6px !important;
-    margin-left: 2px !important;
-  }
-  .search-toggle-btn svg {
-    width: 15px !important;
-    height: 15px !important;
+    padding: 4px 8px !important;
   }
 }
 
@@ -938,7 +928,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // ── Search overlay HTML ──
     var overlay = document.createElement('div');
     overlay.className = 'search-overlay';
-    overlay.innerHTML = '<div class="search-panel"><input type="text" id="search-input" placeholder="搜索文章..." autocomplete="off" spellcheck="false"/><button class="search-close-btn">ESC</button><div class="search-results"><div class="search-results-loading">加载搜索索引中...</div></div></div>';
+    overlay.innerHTML = '<div class="search-panel"><input type="text" id="search-input" placeholder="搜索文章... (Cmd+K)" autocomplete="off" spellcheck="false"/><button class="search-close-btn">ESC</button><div class="search-results"><div class="search-results-loading">加载搜索索引中...</div></div></div>';
     document.body.appendChild(overlay);
 
     var input = overlay.querySelector('#search-input');
@@ -953,6 +943,16 @@ document.addEventListener("DOMContentLoaded", function() {
       if (!window._searchReady) initSearch();
     });
 
+    // Also open search on tapping/cliking the site title (handy on mobile)
+    var siteTitle = document.querySelector('.site-title');
+    if (siteTitle && window.innerWidth <= 768) {
+      siteTitle.addEventListener('click', function(e) {
+        overlay.classList.add('active');
+        setTimeout(function() { input.focus(); }, 100);
+        if (!window._searchReady) initSearch();
+      });
+    }
+
     // Close
     function closeSearch() {
       overlay.classList.remove('active');
@@ -965,7 +965,13 @@ document.addEventListener("DOMContentLoaded", function() {
     });
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape' && overlay.classList.contains('active')) closeSearch();
-      if ((e.metaKey || e.ctrlKey) && e.key === 'k' && !overlay.classList.contains('active')) {
+      if (((e.metaKey || e.ctrlKey) && e.key === 'k') && !overlay.classList.contains('active')) {
+        e.preventDefault();
+        searchBtn.click();
+      }
+      // / key to open search (but not in input fields)
+      if (e.key === '/' && !overlay.classList.contains('active') &&
+          !['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) {
         e.preventDefault();
         searchBtn.click();
       }
