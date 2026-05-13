@@ -5,3 +5,5 @@ _site/
 vendor/
 private/
 .DS_Store
+.DS_Store
+_includes/.DS_Store

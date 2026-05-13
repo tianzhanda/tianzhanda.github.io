@@ -703,11 +703,313 @@ pre {
     font-size: 0.8rem;
   }
 }
+
+/* ==========================================
+   Search Overlay
+   ========================================== */
+.search-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.search-overlay.active {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.search-panel {
+  position: relative;
+  width: 100%;
+  max-width: 680px;
+  margin-top: 80px;
+  background: #0d1117;
+  border: 1px solid rgba(0, 255, 157, 0.15);
+  border-radius: 12px;
+  box-shadow: 0 8px 64px rgba(0, 0, 0, 0.6), 0 0 40px rgba(0, 255, 157, 0.06);
+  overflow: hidden;
+  animation: searchSlideIn 0.2s ease-out;
+}
+
+@keyframes searchSlideIn {
+  from { opacity: 0; transform: translateY(-12px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.search-panel input {
+  width: 100%;
+  padding: 18px 20px;
+  font-size: 1.05rem;
+  font-family: 'JetBrains Mono', 'SF Mono', monospace;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(0, 255, 157, 0.1);
+  color: #e6edf3;
+  outline: none;
+}
+
+.search-panel input::placeholder {
+  color: #484f58;
+}
+
+.search-panel input:focus {
+  border-bottom-color: rgba(0, 255, 157, 0.3);
+}
+
+.search-close-btn {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  background: none;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 6px;
+  color: #8b949e;
+  cursor: pointer;
+  padding: 4px 10px;
+  font-size: 0.8rem;
+  font-family: 'JetBrains Mono', monospace;
+  transition: all 0.2s ease;
+}
+
+.search-close-btn:hover {
+  color: #e6edf3;
+  border-color: rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.04);
+}
+
+.search-results {
+  max-height: 480px;
+  overflow-y: auto;
+  padding: 8px;
+}
+
+.search-results::-webkit-scrollbar { width: 4px; }
+.search-results::-webkit-scrollbar-thumb {
+  background: rgba(0, 255, 157, 0.2);
+  border-radius: 2px;
+}
+
+.search-result-item {
+  display: block;
+  padding: 12px 14px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 0.15s ease;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+}
+
+.search-result-item:last-child {
+  border-bottom: none;
+}
+
+.search-result-item:hover {
+  background: rgba(0, 255, 157, 0.04);
+}
+
+.search-result-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #e6edf3;
+  margin-bottom: 4px;
+}
+
+.search-result-item:hover .search-result-title {
+  color: #00ff9d;
+}
+
+.search-result-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: #8b949e;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.search-result-excerpt {
+  font-size: 0.82rem;
+  color: #8b949e;
+  margin-top: 6px;
+  line-height: 1.5;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.search-result-tag {
+  font-size: 0.7rem;
+  padding: 1px 6px;
+  border-radius: 3px;
+  background: rgba(240, 136, 62, 0.1);
+  color: #f0883e;
+}
+
+.search-results-empty {
+  padding: 32px;
+  text-align: center;
+  color: #484f58;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+}
+
+.search-results-loading {
+  padding: 32px;
+  text-align: center;
+  color: #484f58;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+}
+
+@media (max-width: 768px) {
+  .search-panel {
+    margin-top: 40px;
+    max-width: 94%;
+  }
+  .search-panel input {
+    padding: 14px 16px;
+    font-size: 0.95rem;
+  }
+  .search-results {
+    max-height: 60vh;
+  }
+}
 </style>
 
 <!-- Page views counter -->
 <script>
 document.addEventListener("DOMContentLoaded", function() {
+  // ── Search button ──
+  var nav = document.querySelector('.greedy-nav');
+  if (nav) {
+    var searchBtn = document.createElement('button');
+    searchBtn.className = 'search-toggle-btn';
+    searchBtn.setAttribute('aria-label', '搜索');
+    searchBtn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>';
+    searchBtn.style.cssText = 'background:none;border:1px solid rgba(255,255,255,0.06);border-radius:6px;color:#8b949e;cursor:pointer;padding:6px 10px;display:flex;align-items:center;transition:all 0.2s ease;margin-left:6px;';
+    searchBtn.onmouseenter = function() { this.style.color = '#00ff9d'; this.style.borderColor = 'rgba(0,255,157,0.2)'; };
+    searchBtn.onmouseleave = function() { this.style.color = '#8b949e'; this.style.borderColor = 'rgba(255,255,255,0.06)'; };
+    nav.appendChild(searchBtn);
+
+    // ── Search overlay HTML ──
+    var overlay = document.createElement('div');
+    overlay.className = 'search-overlay';
+    overlay.innerHTML = '<div class="search-panel"><input type="text" id="search-input" placeholder="搜索文章..." autocomplete="off" spellcheck="false"/><button class="search-close-btn">ESC</button><div class="search-results"><div class="search-results-loading">加载搜索索引中...</div></div></div>';
+    document.body.appendChild(overlay);
+
+    var input = overlay.querySelector('#search-input');
+    var results = overlay.querySelector('.search-results');
+    var closeBtn = overlay.querySelector('.search-close-btn');
+
+    // Open
+    searchBtn.addEventListener('click', function() {
+      overlay.classList.add('active');
+      setTimeout(function() { input.focus(); }, 100);
+      // Load search data on first open
+      if (!window._searchReady) initSearch();
+    });
+
+    // Close
+    function closeSearch() {
+      overlay.classList.remove('active');
+      input.value = '';
+      results.innerHTML = '';
+    }
+    closeBtn.addEventListener('click', closeSearch);
+    overlay.addEventListener('click', function(e) {
+      if (e.target === overlay) closeSearch();
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && overlay.classList.contains('active')) closeSearch();
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k' && !overlay.classList.contains('active')) {
+        e.preventDefault();
+        searchBtn.click();
+      }
+    });
+
+    // ── MiniSearch init ──
+    function initSearch() {
+      if (window._searchReady) return;
+      var script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/minisearch@7.2.0/dist/umd/index.min.js';
+      script.onload = function() {
+        fetch('/search.json')
+          .then(function(r) { return r.json(); })
+          .then(function(data) {
+            window._searchIdx = new MiniSearch({
+              fields: ['title', 'content', 'tags', 'categories'],
+              storeFields: ['title', 'url', 'date', 'tags', 'categories'],
+              searchOptions: {
+                boost: { title: 4, tags: 2, categories: 1.5, content: 1 },
+                prefix: true,
+                fuzzy: 0.2,
+              },
+              tokenize: function(text) {
+                return text.split(/[\s,.;:!?()\[\]{}"'，。；：！？（）【】""'']+|(?=[\u4e00-\u9fff])/).filter(Boolean);
+              }
+            });
+            window._searchIdx.addAll(data);
+            window._searchReady = true;
+            results.innerHTML = '<div class="search-results-empty">输入关键词开始搜索</div>';
+          })
+          .catch(function() {
+            results.innerHTML = '<div class="search-results-empty">搜索索引加载失败</div>';
+          });
+      };
+      script.onerror = function() {
+        results.innerHTML = '<div class="search-results-empty">搜索库加载失败，请刷新页面重试</div>';
+      };
+      document.head.appendChild(script);
+    }
+
+    // ── Search input handler ──
+    input.addEventListener('input', function() {
+      var query = this.value.trim();
+      if (!window._searchReady) {
+        results.innerHTML = '<div class="search-results-loading">索引加载中...</div>';
+        return;
+      }
+      if (!query) {
+        results.innerHTML = '<div class="search-results-empty">输入关键词开始搜索</div>';
+        return;
+      }
+
+      var hits = window._searchIdx.search(query, { prefix: true, fuzzy: 0.2 });
+      if (hits.length === 0) {
+        results.innerHTML = '<div class="search-results-empty">未找到相关文章</div>';
+        return;
+      }
+
+      var html = '';
+      for (var i = 0; i < Math.min(hits.length, 20); i++) {
+        var item = hits[i];
+        var excerpt = item.content ? (item.content.length > 120 ? item.content.substring(0, 120) + '...' : item.content) : '';
+        var tagsHtml = '';
+        if (item.tags && item.tags.length) {
+          tagsHtml = item.tags.slice(0, 3).map(function(t) { return '<span class="search-result-tag">#' + t + '</span>'; }).join('');
+        }
+        html += '<a class="search-result-item" href="' + item.url + '">' +
+          '<div class="search-result-title">' + item.title + '</div>' +
+          '<div class="search-result-meta">' +
+            '<span>' + item.date + '</span>' +
+            tagsHtml +
+          '</div>' +
+          (excerpt ? '<div class="search-result-excerpt">' + excerpt + '</div>' : '') +
+        '</a>';
+      }
+      if (hits.length > 20) {
+        html += '<div class="search-results-empty">还有 ' + (hits.length - 20) + ' 条结果，请更精确搜索</div>';
+      }
+      results.innerHTML = html;
+    });
+  }
+
+  // ── Page views counter ──
   var counter = document.createElement('div');
   counter.className = 'page-views-counter';
   counter.innerHTML = '<a href="https://hitscounter.dev" target="_blank"><img src="https://hitscounter.dev/api/hit?url=https%3A%2F%2Ftianzhanda.github.io&label=Visitors&icon=eye-fill&color=%231d9bf0" alt="hits counter" /></a>';

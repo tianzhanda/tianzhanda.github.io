@@ -7,6 +7,12 @@ minimal_mistakes_skin: "dark"
 
 remote_theme: "mmistakes/minimal-mistakes@4.27.0"
 
+exclude:
+  - "private"
+  - "Gemfile"
+  - "Gemfile.lock"
+  - "README.md"
+
 include:
   - "_pages"
 
