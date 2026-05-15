@@ -4,6 +4,16 @@
   =============================================
 -->
 
+<!-- Default to light theme, prevent flash -->
+<script>
+  (function() {
+    var theme = localStorage.getItem('blog-theme');
+    if (theme === null || theme === 'light') {
+      document.documentElement.classList.add('light-theme');
+    }
+  })();
+</script>
+
 <!-- Font Preload & Load -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1443,10 +1453,11 @@ document.addEventListener("DOMContentLoaded", function() {
     setTheme(isLight ? 'dark' : 'light');
   });
 
-  // ── Restore saved theme ──
+  // ── Restore saved theme (default: light) ──
   try {
     var saved = localStorage.getItem('blog-theme');
-    if (saved === 'light') setTheme('light');
+    if (saved === null || saved === 'light') setTheme('light');
+    else setTheme('dark');
   } catch(e) {}
 
   // ── Search button ──
