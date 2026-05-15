@@ -3,7 +3,7 @@ author: "tianzhanda"
 description: "科技博客"
 url: "https://tianzhanda.github.io"
 
-minimal_mistakes_skin: "dark"
+minimal_mistakes_skin: "default"
 
 remote_theme: "mmistakes/minimal-mistakes@4.27.0"
 
