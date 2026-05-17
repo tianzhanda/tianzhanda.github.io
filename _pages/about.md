@@ -4,7 +4,7 @@ title: "关于"
 permalink: /about/
 ---
 
-## 我开发的项目{:.no-permalink}
+<h2>我开发的项目</h2>
 
 <div class="project-card" onclick="window.open('https://tianzhanda.github.io/ai-diary/','_blank')">
   <div class="project-card-icon">🤖</div>
