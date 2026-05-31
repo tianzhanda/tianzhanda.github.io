@@ -36,6 +36,8 @@ plugins:
   - jekyll-sitemap
   - jekyll-include-cache
 
+future: true
+
 defaults:
   - scope:
       path: "_posts"
